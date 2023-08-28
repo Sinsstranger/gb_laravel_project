@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (){
+    return view('mainpage');
+});
+Route::get('/news', function (){
+    return view('newsfeed', ['title' => 'Newsfeed']);
+});
+Route::get('/news/{uri}', function (string $uri){
+    return view('news-detail', ['url' => $uri]);
+});
+Route::get('/welcome-laravel', function (){
+    return view('welcome-laravel');
 });
