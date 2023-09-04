@@ -6,36 +6,48 @@ services:
     mailhog:
         image: 'mailhog/mailhog:latest'
         ports:
-            - '55556:8025'
+            - '8025:8025'
 
     redis:
         image: 'redis:alpine'
 
     mariadb:
         image: 'mariadb:11.0'
-        working_dir: /application
+        working_dir: /var/www/laravel
         volumes:
-            - '.:/application'
+            - db_data:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=password
             - MYSQL_DATABASE=news
             - MYSQL_USER=news_user
             - MYSQL_PASSWORD=password
         ports:
-            - '55558:3306'
+            - '3306:3306'
 
     webserver:
         image: 'nginx:alpine'
-        working_dir: /application
+        working_dir: /var/www/laravel
         volumes:
-            - '.:/application'
+            - '.:/var/www/laravel'
             - './phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf'
         ports:
-            - '55555:80'
+            - '8080:80'
+        depends_on:
+            - php-fpm
+            - redis
+            - mailhog
 
     php-fpm:
         build: phpdocker/php-fpm
-        working_dir: /application
+        working_dir: /var/www/laravel
         volumes:
-            - '.:/application'
+            - '.:/var/www/laravel'
             - './phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/8.2/fpm/conf.d/99-overrides.ini'
+        depends_on:
+            - mariadb
+        links:
+            - redis:redis
+volumes:
+    db_data:
+        labels:
+            - 'Database_data'

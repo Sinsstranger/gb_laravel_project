@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\NewsController;
+use \App\Http\Controllers\NewsCategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,15 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (){
+Route::get('/', function () {
     return view('mainpage');
 });
-Route::get('/news', function (){
-    return view('newsfeed', ['title' => 'Newsfeed']);
+Route::get('/about', function () {
+    return view('about');
 });
-Route::get('/news/{uri}', function (string $uri){
-    return view('news-detail', ['url' => $uri]);
-});
-Route::get('/welcome-laravel', function (){
-    return view('welcome-laravel');
-});
+Route::get('/topics', [NewsCategoryController::class, 'index'])->name('topics');
+Route::get('/news', [NewsController::class, 'index'])->name('newsfeed');
+Route::get('/news/{uri}', [NewsController::class, 'show'])->name('news-detail');
