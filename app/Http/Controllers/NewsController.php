@@ -11,10 +11,10 @@ class NewsController extends Controller
 
     public function index()
     {
-        return \view('newsfeed', ['title' => 'Новости', 'news' => $this->getNews()]);
+        return \view('news.newsfeed', ['title' => 'Новости', 'news' => $this->getNews()]);
     }
 
-    public function show(string $url)
+    public function show(string $url): array
     {
         return $this->getNews($url);
     }
