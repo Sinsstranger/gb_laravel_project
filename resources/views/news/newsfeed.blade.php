@@ -23,7 +23,7 @@
                                 <p class="card-text">{!! $news_card['description'] !!}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="{{ route('news-detail', ['uri' => $news_card['id']]) }}" class="btn btn-sm btn-outline-secondary">Read</a>
+                                        <a href="{{ route('news.news-detail', ['uri' => $news_card['id']]) }}" class="btn btn-sm btn-outline-secondary">Read</a>
                                     </div>
                                     <small class="text-body-secondary">{{ $news_card['created_at'] }}</small>
                                 </div>

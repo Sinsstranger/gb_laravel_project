@@ -22,10 +22,13 @@ Route::get('/about', function () {
     return view('about');
 });
 Route::get('/topics', [NewsCategoryController::class, 'index'])->name('topics');
-Route::get('/news', [NewsController::class, 'index'])->name('newsfeed');
-Route::get('/news/{uri}', [NewsController::class, 'show'])->name('news-detail');
+Route::prefix('news')->name('news.')->group(function (){
+    Route::get('/', [NewsController::class, 'index'])->name('newsfeed');
+    Route::get('/{uri}', [NewsController::class, 'show'])->name('news-detail');
+});
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+
+Route::prefix('admin')->name('admin.')->group(function (){
     Route::get('/', AdminController::class)->name('index');
     Route::resource('news', AdminNewsController::class);
     Route::resource('categories', AdminCategoryController::class);
