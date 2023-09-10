@@ -14,7 +14,7 @@ trait Tnews
                 $news[$i] = [
                     'id' => $i,
                     'title' => \fake()->jobTitle(),
-                    'description' => \fake()->text(100),
+                    'description' => \fake()->text(50),
                     'author' => \fake()->name(),
                     'created_at' => \now()->format('d-m-Y H:i'),
                     'url' => 'url_example',
@@ -25,6 +25,7 @@ trait Tnews
         return [
             'id' => \fake()->uuid(),
             'title' => \fake()->jobTitle(),
+            'description' => \fake()->text(500),
             'author' => \fake()->name(),
             'created_at' => \now()->format('d-m-Y H:i'),
             'url' => $url

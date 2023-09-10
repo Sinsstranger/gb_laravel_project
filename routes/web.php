@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\NewsController;
-use \App\Http\Controllers\NewsCategoryController;
+use \App\Http\Controllers\{NewsController, NewsCategoryController};
+use \App\Http\Controllers\Admin\{CategoryController as AdminCategoryController, NewsController as AdminNewsController, IndexController as AdminController};
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +16,7 @@ use \App\Http\Controllers\NewsCategoryController;
 */
 
 Route::get('/', function () {
-    return view('mainpage');
+    return view('mainpage', ['title' => 'Главная']);
 });
 Route::get('/about', function () {
     return view('about');
@@ -23,3 +24,9 @@ Route::get('/about', function () {
 Route::get('/topics', [NewsCategoryController::class, 'index'])->name('topics');
 Route::get('/news', [NewsController::class, 'index'])->name('newsfeed');
 Route::get('/news/{uri}', [NewsController::class, 'show'])->name('news-detail');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/', AdminController::class)->name('index');
+    Route::resource('news', AdminNewsController::class);
+    Route::resource('categories', AdminCategoryController::class);
+});

@@ -1,21 +1,39 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$title}}</title>
-    @vite(['resources/css/normalize.css', 'resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-<h1>It's a newsfeed page</h1>
-@foreach ($news as $news_card)
-    <section class="news-card">
-        <h3>{{$news_card['title']}}</h3>
-        <p>{{$news_card['description']}}</p>
-        <p>{{$news_card['author']}}</p>
-        <p>{{$news_card['created_at']}}</p>
-        <a href="{{ route('news-detail', ['uri' => $news_card['url']]) }}">Читать</a>
+@extends('layouts.main')
+@section('content')
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">{{$h1}}</h1>
+            </div>
+        </div>
     </section>
-@endforeach
-</body>
-</html>
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                @forelse ($news as $news_card)
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>{{ $news_card['title'] }}</title>
+                                <rect width="100%" height="100%" fill="#55595c"/>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ $news_card['title'] }}</text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">{!! $news_card['description'] !!}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="{{ route('news-detail', ['uri' => $news_card['id']]) }}" class="btn btn-sm btn-outline-secondary">Read</a>
+                                    </div>
+                                    <small class="text-body-secondary">{{ $news_card['created_at'] }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <h2>Newsfeed is Empty</h2>
+                @endforelse
+            </div>
+        </div>
+    </div>
+@endsection

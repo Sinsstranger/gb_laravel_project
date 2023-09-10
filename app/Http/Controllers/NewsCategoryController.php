@@ -8,6 +8,6 @@ class NewsCategoryController extends Controller
 {
     use Tnews;
     public function index(){
-        return \view("news.news-categories", ["categories" => $this->getCategories()]);
+        return \view("news.news-categories", ["title" => "Категории новостей", "categories" => $this->getCategories()]);
     }
 }
