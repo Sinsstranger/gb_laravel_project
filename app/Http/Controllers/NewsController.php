@@ -8,7 +8,7 @@ use Illuminate\View\View;
 
 class NewsController extends Controller
 {
-    use Tnews;
+    use TNews;
 
     public function index(): View
     {
