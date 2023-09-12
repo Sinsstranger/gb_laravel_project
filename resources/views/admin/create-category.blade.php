@@ -10,13 +10,6 @@
             <input type="text" name="url" class="form-control" id="add-category-form-url" placeholder="Url" value="{{ old('url') }}">
         </div>
         <div class="form-group">
-            <label for="add-category-form-state">Статус</label>
-            <select class="form-control"  id="add-category-form-state" name="status">
-                <option @if(old('status') === 'active') selected @endif>active</option>
-                <option @if(old('status') === 'blocked') selected @endif>blocked</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label for="add-category-form-description">Описание</label>
             <textarea name="description" class="form-control" id="add-category-form-description" rows="3">{{ old('description') }}</textarea>
         </div>

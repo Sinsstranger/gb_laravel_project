@@ -10,21 +10,18 @@ trait TTopics
             'category_id' => 1,
             'title' => 'High Tech',
             'url' => 'high-tech',
-            'status' => 'active',
         ],
         2 => [
             'id' => 2,
             'category_id' => 2,
             'title' => 'Politics',
             'url' => 'politics',
-            'status' => 'active',
         ],
         3 => [
             'id' => 3,
             'category_id' => 3,
             'title' => 'Society',
             'url' => 'society',
-            'status' => 'active',
         ],
     ];
 
