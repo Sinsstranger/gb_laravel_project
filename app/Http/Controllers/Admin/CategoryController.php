@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TTopics;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+   use TTopics;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return \view('admin.topics-list', ['topics' => $this->categories]);
     }
 
     /**
@@ -20,7 +22,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return \view('admin.create-category');
     }
 
     /**
@@ -28,7 +30,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->flash();
+        return redirect()->route('admin.topics.create');
     }
 
     /**
