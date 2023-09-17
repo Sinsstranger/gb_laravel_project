@@ -21,19 +21,19 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-Route::prefix('topics')->name('topics.')->group(function () {
+Route::prefix('categories')->name('categories.')->group(function () {
     Route::get('/', [NewsCategoryController::class, 'index'])->name('topics');
-    Route::get('/{url}', [NewsCategoryController::class, 'show'])->name('topics-detail');
+    Route::get('/{url_slug}', [NewsCategoryController::class, 'show'])->name('topics-detail');
 
 });
 Route::prefix('news')->name('news.')->group(function () {
     Route::get('/', [NewsController::class, 'index'])->name('newsfeed');
-    Route::get('/{uri}', [NewsController::class, 'show'])->name('news-detail');
+    Route::get('/{url_slug}', [NewsController::class, 'show'])->name('news-detail');
 });
 
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', AdminController::class)->name('index');
     Route::resource('news', AdminNewsController::class);
-    Route::resource('topics', AdminCategoryController::class);
+    Route::resource('categories', AdminCategoryController::class);
 });

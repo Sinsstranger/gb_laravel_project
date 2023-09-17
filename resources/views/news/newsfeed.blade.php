@@ -16,18 +16,18 @@
                             <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                                  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
                                  preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>{{ $news_card['title'] }}</title>
+                                <title>{{ $news_card->title }}</title>
                                 <rect width="100%" height="100%" fill="#55595c"/>
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ $news_card['title'] }}</text>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ $news_card->title }}</text>
                             </svg>
                             <div class="card-body">
-                                <p class="card-text">{!! $news_card['description'] !!}</p>
+                                <p class="card-text">{!! $news_card->description !!}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="{{ route('news.news-detail', ['uri' => $news_card['url']]) }}"
+                                        <a href="{{ route('news.news-detail', ['url_slug' => $news_card->url_slug]) }}"
                                            class="btn btn-sm btn-outline-secondary">Read</a>
                                     </div>
-                                    <small class="text-body-secondary">{{ $news_card['created_at'] }}</small>
+                                    <small class="text-body-secondary">{{ $news_card->created_at }}</small>
                                 </div>
                             </div>
                         </div>

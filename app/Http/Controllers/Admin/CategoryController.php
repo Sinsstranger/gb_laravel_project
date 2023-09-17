@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TTopics;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-   use TTopics;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return \view('admin.topics-list', ['topics' => $this->categories]);
+        return \view('admin.topics-list', ['topics' => DB::table('categories')->get()]);
     }
 
     /**
@@ -30,8 +30,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->flash();
-        return redirect()->route('admin.topics.create');
+        DB::table('categories')->insert([
+            'title' => $request->get('title'),
+            'url_slug' => trim($request->get('url')),
+            'description' => $request->get('description'),
+            'created_at' => now(),
+        ]);
+        return redirect()->route('admin.categories.index');
     }
 
     /**

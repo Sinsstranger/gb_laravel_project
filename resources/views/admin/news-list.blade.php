@@ -15,6 +15,7 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Заголовок</th>
+                <th scope="col">Категория</th>
                 <th scope="col">Url Адрес</th>
                 <th scope="col">Действия</th>
             </tr>
@@ -22,10 +23,11 @@
             <tbody>
             @forelse($news as $news_item)
                 <tr>
-                    <td>{{ $news_item['id'] }}</td>
-                    <td>{{ $news_item['title'] }}</td>
+                    <td>{{ $news_item->id }}</td>
+                    <td>{{ $news_item->title }}</td>
+                    <td>{{ $news_item->category_title }}</td>
                     <td>
-                        <a href="{{ route('news.news-detail', ['uri' => $news_item['url']]) }}">{{ route('news.news-detail', ['uri' => $news_item['url']]) }}</a>
+                        <a href="{{ route('news.news-detail', ['url_slug' => $news_item->url_slug]) }}">{{ route('news.news-detail', ['url_slug' => $news_item->url_slug]) }}</a>
                     </td>
                     <td>
                         <div class="btn-toolbar mb-2 mb-md-0">
