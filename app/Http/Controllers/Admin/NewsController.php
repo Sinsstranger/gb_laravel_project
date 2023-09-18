@@ -6,18 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\TNews;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class NewsController extends Controller
 {
-    use TNews;
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return \view('admin.news-list', ['title' => 'Новости', 'h1' => "Список новостей", 'news' => $this->getNews()]);
+        return view('admin.news-list', ['title' => 'Новости', 'h1' => "Список новостей", 'news' => DB::table('news')
+            ->join('categories', 'categories.id', 'news.category_id')
+            ->select('news.*', 'categories.title as category_title')->get()
+        ]);
     }
 
     /**
@@ -25,7 +27,8 @@ class NewsController extends Controller
      */
     public function create(Request $request): View
     {
-        return \view('admin.create-news');
+        $categories = DB::table('categories')->get();
+        return \view('admin.create-news', ['categories' => $categories]);
     }
 
     /**
@@ -33,8 +36,17 @@ class NewsController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->flash();
-        return redirect()->route('admin.news.create');
+        $data = $request->all();
+        DB::table('news')->insert([
+            'title' => $data['title'],
+            'author' => $data['author'],
+            'status' => $data['status'],
+            'url_slug' => trim($data['url']),
+            'description' => $data['description'],
+            'category_id' => $data['category_id'],
+            'created_at' => now(),
+        ]);
+        return redirect()->route('news.news-detail', ['url_slug' => $data['url']]);
     }
 
     /**

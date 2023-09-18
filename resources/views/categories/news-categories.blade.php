@@ -4,7 +4,7 @@
     @foreach ($categories as $category)
         <section class="news-card">
             <h3>
-                <a href="{{ route('topics.topics-detail', ['url' => $category['url']]) }}">{{$category['title']}}</a>
+                <a href="{{ route('categories.topics-detail', ['url_slug' => $category->url_slug]) }}">{{$category->title}}</a>
             </h3>
         </section>
     @endforeach

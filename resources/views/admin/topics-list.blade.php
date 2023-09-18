@@ -5,7 +5,7 @@
         <h1 class="h2">Список категорий</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a href="{{ route('admin.topics.create') }}" type="button" class="btn btn-sm btn-outline-secondary">Добавить
+                <a href="{{ route('admin.categories.create') }}" type="button" class="btn btn-sm btn-outline-secondary">Добавить
                     категорию</a>
             </div>
         </div>
@@ -23,10 +23,10 @@
             <tbody>
             @forelse($topics as $topic)
                 <tr>
-                    <td>{{ $topic['id'] }}</td>
-                    <td>{{ $topic['title'] }}</td>
+                    <td>{{ $topic->id }}</td>
+                    <td>{{ $topic->title }}</td>
                     <td>
-                        <a href="{{ route('topics.topics-detail', ['url' => $topic['url']]) }}">{{ route('topics.topics-detail', ['url' => $topic['url']]) }}</a>
+                        <a href="{{ route('categories.topics-detail', ['url_slug' => $topic->url_slug]) }}">{{ route('categories.topics-detail', ['url_slug' => $topic->url_slug]) }}</a>
                     </td>
                     <td>
                         <div class="btn-toolbar mb-2 mb-md-0">
