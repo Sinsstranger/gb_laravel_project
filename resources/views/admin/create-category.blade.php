@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <h1 class="h2">Создать категорию</h1>
+    @include('inc.message')
     <form method="POST" action="{{ route('admin.categories.store') }}">
         @csrf
         <div class="form-group">

@@ -10,6 +10,7 @@
             </div>
         </div>
     </div>
+    @include('inc.message')
     <div class="table-responsive small">
         <table class="table table-striped table-sm">
             <thead>
@@ -42,5 +43,6 @@
             @endforelse
             </tbody>
         </table>
+        {{ $topics->links() }}
     </div>
 @endsection

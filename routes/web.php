@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\{NewsController, NewsCategoryController};
+use App\Http\Controllers\{HomeController, NewsController, NewsCategoryController};
 use \App\Http\Controllers\Admin\{CategoryController as AdminCategoryController, NewsController as AdminNewsController, IndexController as AdminController};
 
 /*
@@ -15,9 +15,7 @@ use \App\Http\Controllers\Admin\{CategoryController as AdminCategoryController, 
 |
 */
 
-Route::get('/', function () {
-    return view('mainpage', ['title' => 'Главная']);
-})->name('mainpage');
+Route::get('/', HomeController::class)->name('mainpage');
 Route::get('/about', function () {
     return view('about');
 })->name('about');

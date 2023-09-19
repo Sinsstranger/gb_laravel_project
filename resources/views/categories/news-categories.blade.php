@@ -7,5 +7,6 @@
                 <a href="{{ route('categories.topics-detail', ['url_slug' => $category->url_slug]) }}">{{$category->title}}</a>
             </h3>
         </section>
+        {{ $categories->links() }}
     @endforeach
 @endsection

@@ -36,6 +36,7 @@
                     <h2>Newsfeed is Empty</h2>
                 @endforelse
             </div>
+            {{ $news->links() }}
         </div>
     </div>
 @endsection

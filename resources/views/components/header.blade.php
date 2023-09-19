@@ -30,6 +30,8 @@
                 </svg>
                 <strong>Daily News</strong>
             </a>
+            <a class="nav-link @if(request()->routeIs(['news.newsfeed', 'news.news-detail'])) active @endif" href="{{ route('news.newsfeed') }}">Новости</a>
+            <a class="nav-link @if(request()->routeIs(['categories.topics', 'categories.topics-detail'])) active @endif" href="{{ route('categories.topics') }}">Категории</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

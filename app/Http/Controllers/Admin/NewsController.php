@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\TNews;
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class NewsController extends Controller
@@ -16,9 +16,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('admin.news-list', ['title' => 'Новости', 'h1' => "Список новостей", 'news' => DB::table('news')
+        return view('admin.news-list', ['title' => 'Новости', 'h1' => "Список новостей", 'news' => News::query()
             ->join('categories', 'categories.id', 'news.category_id')
-            ->select('news.*', 'categories.title as category_title')->get()
+            ->select('news.*', 'categories.title as category_title')->paginate(5)
         ]);
     }
 
@@ -27,7 +27,7 @@ class NewsController extends Controller
      */
     public function create(Request $request): View
     {
-        $categories = DB::table('categories')->get();
+        $categories = Category::all();
         return \view('admin.create-news', ['categories' => $categories]);
     }
 
@@ -36,17 +36,19 @@ class NewsController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $data = $request->all();
-        DB::table('news')->insert([
+        $data = $request->only(['title', 'author', 'status', 'url', 'description', 'category_id',]);
+        $news = new News([
             'title' => $data['title'],
             'author' => $data['author'],
             'status' => $data['status'],
             'url_slug' => trim($data['url']),
             'description' => $data['description'],
             'category_id' => $data['category_id'],
-            'created_at' => now(),
         ]);
-        return redirect()->route('news.news-detail', ['url_slug' => $data['url']]);
+        if ($news->save()) {
+            return redirect()->route('admin.news.index')->with('success', 'Новость успешно создана');
+        }
+        return back()->with('error', 'Не удалось создать новость');
     }
 
     /**
@@ -60,24 +62,37 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(News $news)
     {
-        //
+        $categories = Category::all();
+        return \view('admin.edit-news', [
+            'news' => $news,
+            'categories' => $categories
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, News $news): RedirectResponse
     {
-        //
+        $data = $request->only(['title', 'url', 'author', 'status', 'category_id', 'description',]);
+        $news->fill($data);
+        if ($news->save()) {
+            return redirect()->route('admin.news.index')->with('success', 'Новость успешно изменена');
+        }
+        return back()->with('error', 'Не удалось отредактировать новость');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(News $news): RedirectResponse
     {
-        //
+        $id = $news->id;
+        if ($news->delete()) {
+            return redirect()->route('admin.news.index')->with('success', 'Новость ' . $id . ' успешно удалена');
+        }
+        return back()->with('error', 'Не удалось удалить новость');
     }
 }
