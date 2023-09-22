@@ -5,7 +5,8 @@
         <h1 class="h2">{{ $h1 }}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a href="{{ route('admin.news.create') }}" type="button" class="btn btn-sm btn-outline-secondary">Добавить новость</a>
+                <a href="{{ route('admin.news.create') }}" type="button" class="btn btn-sm btn-outline-secondary">Добавить
+                    новость</a>
             </div>
         </div>
     </div>
@@ -24,7 +25,7 @@
             <tbody>
             @forelse($news as $news_item)
                 <tr>
-                    <td>{{ $news_item->id }}</td>
+                    <td class="news-id">{{ $news_item->id }}</td>
                     <td>{{ $news_item->title }}</td>
                     <td>{{ $news_item->category_title }}</td>
                     <td>
@@ -33,8 +34,10 @@
                     <td>
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group me-2">
-                                <a href="{{route('admin.news.edit', \App\Models\News::getOneByField('url_slug', $news_item->url_slug))}}" type="button" class="btn btn-sm btn-outline-secondary">Редактировать</a>
-                                <a href="{{route('admin.news.destroy', \App\Models\News::getOneByField('url_slug', $news_item->url_slug))}}" type="button" class="btn btn-sm btn-outline-secondary">Удалить</a>
+                                <a href="{{route('admin.news.edit', \App\Models\News::getOneByField('url_slug', $news_item->url_slug))}}"
+                                   type="button" class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                                <button type="button" class="btn btn-sm btn-outline-secondary delete-btn">Удалить
+                                </button>
                             </div>
                         </div>
                     </td>
@@ -48,3 +51,33 @@
         {{ $news->links() }}
     </div>
 @endsection
+@push('js')
+    <script>
+        async function deleteItem(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+            let result = await response.json();
+            return result.ok;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.table-striped').addEventListener('click', (event) => {
+                if (event.target.classList.contains('delete-btn')) {
+                    const activeRow = event.target.closest('tr');
+                    const activeId = parseInt(activeRow.querySelector('.news-id').textContent);
+                    if (confirm(`Удалить новость с #ID = ${activeId}`)) {
+                        deleteItem(`/admin/news/${activeId}`);
+                        activeRow.remove();
+                    }else {
+                        return false;
+                    }
+                }
+                return false;
+            });
+        });
+    </script>
+@endpush
