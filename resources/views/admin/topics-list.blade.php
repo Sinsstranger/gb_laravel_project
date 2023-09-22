@@ -24,7 +24,7 @@
             <tbody>
             @forelse($topics as $topic)
                 <tr>
-                    <td>{{ $topic->id }}</td>
+                    <td class="category-id">{{ $topic->id }}</td>
                     <td>{{ $topic->title }}</td>
                     <td>
                         <a href="{{ route('categories.topics-detail', ['url_slug' => $topic->url_slug]) }}">{{ route('categories.topics-detail', ['url_slug' => $topic->url_slug]) }}</a>
@@ -33,7 +33,7 @@
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group me-2">
                                 <a type="button" class="btn btn-sm btn-outline-secondary">Редактировать</a>
-                                <a type="button" class="btn btn-sm btn-outline-secondary">Удалить</a>
+                                <button type="button" class="btn btn-sm btn-outline-secondary delete-btn">Удалить</button>
                             </div>
                         </div>
                     </td>
@@ -46,3 +46,34 @@
         {{ $topics->links() }}
     </div>
 @endsection
+@push('js')
+    <script>
+        async function deleteItem(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+            let result = await response.json();
+            console.log(result)
+            return result.ok;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.table-striped').addEventListener('click', (event) => {
+                if (event.target.classList.contains('delete-btn')) {
+                    const activeRow = event.target.closest('tr');
+                    const activeId = parseInt(activeRow.querySelector('.category-id').textContent);
+                    if (confirm(`Удалить категорию с #ID = ${activeId}`)) {
+                        deleteItem(`/admin/categories/${activeId}`);
+                        activeRow.remove();
+                    }else {
+                        return false;
+                    }
+                }
+                return false;
+            });
+        });
+    </script>
+@endpush

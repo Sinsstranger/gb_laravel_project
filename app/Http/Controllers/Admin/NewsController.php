@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\News\Status;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\News\Create;
+use App\Http\Requests\Admin\News\Edit;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\View\View;
 
 class NewsController extends Controller
@@ -34,9 +38,11 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Create $request): RedirectResponse
     {
+
         $data = $request->only(['title', 'author', 'status', 'url', 'description', 'category_id',]);
+
         $news = new News([
             'title' => $data['title'],
             'author' => $data['author'],
@@ -74,7 +80,7 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, News $news): RedirectResponse
+    public function update(Edit $request, News $news): RedirectResponse
     {
         $data = $request->only(['title', 'url', 'author', 'status', 'category_id', 'description',]);
         $news->fill($data);
