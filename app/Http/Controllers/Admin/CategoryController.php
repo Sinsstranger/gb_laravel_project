@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\TTopics;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -14,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return \view('admin.topics-list', ['topics' => DB::table('categories')->get()]);
+        return \view('admin.topics-list', ['topics' => Category::query()->paginate(6)]);
     }
 
     /**
@@ -30,13 +29,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        DB::table('categories')->insert([
+//        Category::query()->insert([
+//            'title' => $request->get('title'),
+//            'url_slug' => trim($request->get('url')),
+//            'description' => $request->get('description'),
+//            'created_at' => now(),
+//        ]);
+        $category = new Category([
             'title' => $request->get('title'),
             'url_slug' => trim($request->get('url')),
             'description' => $request->get('description'),
             'created_at' => now(),
         ]);
-        return redirect()->route('admin.categories.index');
+        if($category->save()){
+            return redirect()->route('admin.categories.index')->with('success', 'Категория успешно создана');
+        }
+        return back()->with('error', 'Не удалось создать категорию');
     }
 
     /**

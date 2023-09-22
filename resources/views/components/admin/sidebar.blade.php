@@ -18,7 +18,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.news.index') || request()->routeIs('admin.news.create')) active @endif" href="{{route('admin.news.index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs(['admin.news.index', 'admin.news.create'])) active @endif" href="{{route('admin.news.index')}}">
                         <svg class="bi">
                             <use xlink:href="#file-earmark"/>
                         </svg>
@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.categories.index') || request()->routeIs('admin.categories.create')) active @endif" href="{{route('admin.categories.index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs(['admin.categories.index', 'admin.categories.create'])) active @endif" href="{{route('admin.categories.index')}}">
                         <svg class="bi">
                             <use xlink:href="#file-earmark"/>
                         </svg>
