@@ -4,14 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\News\Status;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Category\Create;
-use App\Http\Requests\Admin\News\Edit;
+use App\Http\Requests\Admin\Category\{CreateRequest, EditRequest};
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Enum;
 
 class CategoryController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +39,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Create $request)
+    public function store(CreateRequest $request)
     {
         $category = new Category([
             'title' => $request->get('title'),
@@ -64,7 +72,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Edit $request, string $id)
+    public function update(EditRequest $request, string $id)
     {
         $category = new Category([
             'title' => $request->get('title'),

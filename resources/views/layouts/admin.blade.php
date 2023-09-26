@@ -4,7 +4,9 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@section('title')Панель управления@show</title>
+    <title>@section('title')
+            Панель управления
+        @show</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
@@ -82,7 +84,12 @@
         }
     </style>
 
-    @vite(['resources/css/bootstrap.min.css', 'resources/admin/css/dashboard.css', 'resources/js/bootstrap.bundle.min.js', 'resources/js/color-modes.js', 'resources/admin/js/dashboard.js'])
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Scripts -->
+    @vite(['resources/admin/css/dashboard.css', 'resources/admin/js/dashboard.js', 'resources/sass/app.scss', 'resources/js/bootstrap.js', 'resources/js/color-modes.js', 'resources/js/app.js'])
     <!-- Custom styles for this template -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
