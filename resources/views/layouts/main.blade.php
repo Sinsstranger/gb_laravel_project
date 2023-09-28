@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$title}}</title>
-    @vite(['resources/css/bootstrap.min.css', 'resources/css/app.css', 'resources/js/bootstrap.bundle.min.js', 'resources/js/app.js', 'resources/js/color-modes.js'])
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/bootstrap.js', 'resources/js/color-modes.js'])
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <style>
         .bd-placeholder-img {
