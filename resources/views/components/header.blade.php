@@ -25,7 +25,8 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -58,10 +59,14 @@
                 </svg>
                 <strong>Daily News</strong>
             </a>
-            <a class="nav-link @if(request()->routeIs(['news.newsfeed', 'news.news-detail'])) active @endif" href="{{ route('news.newsfeed') }}">Новости</a>
-            <a class="nav-link @if(request()->routeIs(['categories.topics', 'categories.topics-detail'])) active @endif" href="{{ route('categories.topics') }}">Категории</a>
+            <a class="nav-link @if(request()->routeIs(['news.newsfeed', 'news.news-detail'])) active @endif"
+               href="{{ route('news.newsfeed') }}">Новости</a>
+            <a class="nav-link @if(request()->routeIs(['categories.topics', 'categories.topics-detail'])) active @endif"
+               href="{{ route('categories.topics') }}">Категории</a>
             @auth()
-            <a class="nav-link" href="{{ route('admin.index') }}">Админка</a>
+                @if(\Illuminate\Support\Facades\Auth::user()->is_admin === true)
+                    <a class="nav-link" href="{{ route('admin.index') }}">Админка</a>
+                @endif
             @endauth
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">

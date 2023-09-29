@@ -9,7 +9,8 @@
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.index')) active @endif" aria-current="page"
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.index')) active @endif"
+                       aria-current="page"
                        href="{{ route('admin.index') }}">
                         <svg class="bi">
                             <use xlink:href="#house-fill"/>
@@ -18,7 +19,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs(['admin.news.index', 'admin.news.create'])) active @endif" href="{{route('admin.news.index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs(['admin.news.index', 'admin.news.create'])) active @endif"
+                       href="{{route('admin.news.index')}}">
                         <svg class="bi">
                             <use xlink:href="#file-earmark"/>
                         </svg>
@@ -26,7 +28,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs(['admin.categories.index', 'admin.categories.create'])) active @endif" href="{{route('admin.categories.index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs(['admin.categories.index', 'admin.categories.create'])) active @endif"
+                       href="{{route('admin.categories.index')}}">
                         <svg class="bi">
                             <use xlink:href="#file-earmark"/>
                         </svg>
@@ -34,11 +37,27 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs(['admin.users.index', 'admin.users.create'])) active @endif" href="{{route('admin.users.index')}}">
-                        <svg class="bi">
-                            <use xlink:href="#people"/>
-                        </svg>
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs(['admin.users.index', 'admin.users.create'])) active @endif"
+                       href="{{route('admin.users.index')}}">
+                        @if(request()->routeIs(request()->routeIs(['admin.users.index', 'admin.users.create'])))
+                            <svg class="bi">
+                                <use xlink:href="#people-fill"/>
+                            </svg>
+                        @else
+                            <svg class="bi">
+                                <use xlink:href="#people"/>
+                            </svg>
+                        @endif
+
                         Пользователи
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.parser') }}">
+                        <svg class="bi">
+                            <use xlink:href="#gear-wide-connected"/>
+                        </svg>
+                        Парсер
                     </a>
                 </li>
                 <li class="nav-item">
