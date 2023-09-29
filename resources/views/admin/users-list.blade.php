@@ -16,22 +16,31 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Имя</th>
-                <th scope="col">Администратор</th>
                 <th scope="col">Email</th>
+                <th class="col">Роль</th>
                 <th scope="col">Действия</th>
             </tr>
             </thead>
             <tbody>
             @forelse($users as $user_item)
+                @if($user_item->id === \Illuminate\Support\Facades\Auth::id())
+                    @continue
+                @endif
                 <tr>
                     <td class="user-id">{{ $user_item->id }}</td>
                     <td {{ \Illuminate\Support\Facades\Auth::user()->getAuthIdentifier() == $user_item->id ? 'class=active' : null }} >{{ $user_item->name }}</td>
-                    <td>{{ $user_item->is_admin ? 'Да' : 'Нет'}}</td>
                     <td>{{ $user_item->email }}</td>
+                    <td>
+                        @if($user_item->is_admin)
+                            <a href="{{ route('admin.toggleAdmin', $user_item) }}" type="button" class="btn btn-success elipsis-btn">Администратор</a>
+                        @else
+                            <a href="{{ route('admin.toggleAdmin', $user_item) }}" type="button" class="btn btn-danger elipsis-btn">Пользователь</a>
+                        @endif
+                    </td>
                     <td>
                         <div class="btn-toolbar mb-2 mb-md-0">
                             <div class="btn-group me-2">
-                                <a href="{{route('admin.users.edit', $user_item->id)}}"
+                                <a href="{{route('admin.users.edit', $user_item)}}"
                                    type="button" class="btn btn-sm btn-outline-secondary">Редактировать</a>
                                 <button type="button" class="btn btn-sm btn-outline-secondary delete-btn">Удалить
                                 </button>

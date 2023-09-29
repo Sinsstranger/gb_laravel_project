@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{HomeController, NewsController, NewsCategoryController};
+use App\Http\Controllers\{ HomeController, NewsController, NewsCategoryController};
 use \App\Http\Controllers\Admin\{CategoryController as AdminCategoryController, NewsController as AdminNewsController, IndexController as AdminController, UserController as AdminUserController};
-
+use Laravel\Socialite\Facades\Socialite;
+use \App\Http\Controllers\Auth\GithubAuthController;
+use \App\Http\Controllers\Admin\ParserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,9 +34,15 @@ Route::prefix('news')->name('news.')->group(function () {
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'is.admin'])->group(function () {
     Route::get('/', AdminController::class)->name('index');
+    Route::get('/parser', ParserController::class)->name('parser');
+    Route::get('/users/toggle_admin/{user}', [AdminUserController::class, 'toggleAdmin'])->name('toggleAdmin');
     Route::resource('news', AdminNewsController::class);
     Route::resource('categories', AdminCategoryController::class);
     Route::resource('users', AdminUserController::class);
 });
+// Маршрут для перенаправления пользователя на страницу аутентификации Github
+Route::get('login/github', [GithubAuthController::class, 'redirectToProvider'])->name('login.github');
 
+// Маршрут для получения данных пользователя из Github и создания или обновления пользователя в базе данных
+Route::get('login/github/callback', [GithubAuthController::class, 'handleProviderCallback'])->name('login.github.callback');
 Auth::routes();

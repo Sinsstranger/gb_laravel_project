@@ -14,7 +14,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
+     * Массив полей, которые можно заполнять массово
      * @var array<int, string>
      */
     protected $fillable = [
@@ -22,10 +22,13 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'avatar',
+        'github_id',
     ];
     protected $table = 'users';
     /**
      * The attributes that should be hidden for serialization.
+     * Массив полей, которые должны быть скрыты при преобразовании модели в массив или JSON
      *
      * @var array<int, string>
      */
